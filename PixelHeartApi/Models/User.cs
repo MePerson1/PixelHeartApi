@@ -17,8 +17,8 @@ namespace PixelHeartApi.Models
         [Required]
         public int Level { get; set; }
 
-        public ICollection<Skill> Skills { get; set; }
-        public ICollection<Game> Games { get; set; }
+        public ICollection<UserSkill> UserSkills { get; set; }
+        public ICollection<UserGamel> UserGames { get; set; }
 
     }
 }
