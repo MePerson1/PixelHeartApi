@@ -1,10 +1,10 @@
-﻿using FirstWebApi.Models;
+﻿using PixelHeartApi.Models;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.EntityFrameworkCore;
 using PixelHeartApi.Models;
 using System.Collections.Generic;
 
-namespace FirstWebApi.Data
+namespace PixelHeartApi.Data
 {
     public class DatabaseContext : DbContext
     {
