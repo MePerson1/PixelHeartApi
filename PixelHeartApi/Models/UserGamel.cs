@@ -14,6 +14,6 @@ namespace PixelHeartApi.Models
         [Required]
         public int GameId { get; set; }
         [ForeignKey("GameId")]
-        public Skill Game { get; set; }
+        public Game Game { get; set; }
     }
 }

@@ -12,5 +12,19 @@ namespace PixelHeartApi.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<Game> Games { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Match>()
+            .HasOne(p => p.User)
+            .WithMany()
+            .HasForeignKey(p => p.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Match>()
+                        .HasOne(p => p.Sex)
+                        .WithMany()
+                        .HasForeignKey(p => p.SexId)
+                        .OnDelete(DeleteBehavior.Restrict);
+        }
     }
 }
