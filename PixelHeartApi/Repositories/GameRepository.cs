@@ -13,6 +13,7 @@ namespace PixelHeartApi.Repositories
         }
         public int Create(Game game)
         {
+
             context.Games.Add(game);
             context.SaveChanges();
             return game.Id;

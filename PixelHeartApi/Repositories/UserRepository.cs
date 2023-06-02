@@ -10,6 +10,7 @@ namespace PixelHeartApi.Repositories
 
 
         public UserRepository(DatabaseContext context) { this.context = context; }
+
         public int Create(User user)
         {
             context.Users.Add(user);
@@ -30,6 +31,12 @@ namespace PixelHeartApi.Repositories
         public IEnumerable<User> GetAll()
         {
             return context.Users.ToList();
+        }
+
+        public User? GetByEmail(string email)
+        {
+            var user = context.Users.FirstOrDefault(u => u.Email == email);
+            return user;
         }
 
         public User? GetById(int id)
@@ -54,5 +61,7 @@ namespace PixelHeartApi.Repositories
 
             return true;
         }
+
+
     }
 }

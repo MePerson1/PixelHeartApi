@@ -12,14 +12,12 @@ namespace PixelHeartApi.Models
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
-
-        [Required]
-        public string Backstory { get; set; }
         [Required]
         public int Age { get; set; }
 
+        public string Backstory { get; set; } = string.Empty;
+
         public string? VerificationToken { get; set; }
-        public DateTime? CreatedAt { get; set; }
 
         public ICollection<UserSkill> UserSkills { get; set; }
         public ICollection<UserGamel> UserGames { get; set; }
