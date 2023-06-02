@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace PixelHeartApi.Migrations
 {
     /// <inheritdoc />
-    public partial class MyFirstMigration : Migration
+    public partial class test1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -47,10 +46,8 @@ namespace PixelHeartApi.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Backstory = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
-                    VerificationToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Backstory = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -90,25 +87,25 @@ namespace PixelHeartApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserGamel",
+                name: "UserGames",
                 columns: table => new
                 {
-                    UserGamelId = table.Column<int>(type: "int", nullable: false)
+                    UserGameId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     GameId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserGamel", x => x.UserGamelId);
+                    table.PrimaryKey("PK_UserGames", x => x.UserGameId);
                     table.ForeignKey(
-                        name: "FK_UserGamel_Games_GameId",
+                        name: "FK_UserGames_Games_GameId",
                         column: x => x.GameId,
                         principalTable: "Games",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserGamel_Users_UserId",
+                        name: "FK_UserGames_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -116,7 +113,7 @@ namespace PixelHeartApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserSkill",
+                name: "UserSkills",
                 columns: table => new
                 {
                     UserSkillId = table.Column<int>(type: "int", nullable: false)
@@ -126,15 +123,15 @@ namespace PixelHeartApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserSkill", x => x.UserSkillId);
+                    table.PrimaryKey("PK_UserSkills", x => x.UserSkillId);
                     table.ForeignKey(
-                        name: "FK_UserSkill_Skills_SkillId",
+                        name: "FK_UserSkills_Skills_SkillId",
                         column: x => x.SkillId,
                         principalTable: "Skills",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserSkill_Users_UserId",
+                        name: "FK_UserSkills_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -157,23 +154,23 @@ namespace PixelHeartApi.Migrations
                 column: "UserId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserGamel_GameId",
-                table: "UserGamel",
+                name: "IX_UserGames_GameId",
+                table: "UserGames",
                 column: "GameId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserGamel_UserId",
-                table: "UserGamel",
+                name: "IX_UserGames_UserId",
+                table: "UserGames",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserSkill_SkillId",
-                table: "UserSkill",
+                name: "IX_UserSkills_SkillId",
+                table: "UserSkills",
                 column: "SkillId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserSkill_UserId",
-                table: "UserSkill",
+                name: "IX_UserSkills_UserId",
+                table: "UserSkills",
                 column: "UserId");
         }
 
@@ -184,10 +181,10 @@ namespace PixelHeartApi.Migrations
                 name: "Match");
 
             migrationBuilder.DropTable(
-                name: "UserGamel");
+                name: "UserGames");
 
             migrationBuilder.DropTable(
-                name: "UserSkill");
+                name: "UserSkills");
 
             migrationBuilder.DropTable(
                 name: "Games");

@@ -12,8 +12,8 @@ using PixelHeartApi.Data;
 namespace PixelHeartApi.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230602143351_refresh1")]
-    partial class refresh1
+    [Migration("20230602192903_test1")]
+    partial class test1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -106,9 +106,6 @@ namespace PixelHeartApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -121,21 +118,18 @@ namespace PixelHeartApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("VerificationToken")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("PixelHeartApi.Models.UserGamel", b =>
+            modelBuilder.Entity("PixelHeartApi.Models.UserGame", b =>
                 {
-                    b.Property<int>("UserGamelId")
+                    b.Property<int>("UserGameId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserGamelId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserGameId"));
 
                     b.Property<int>("GameId")
                         .HasColumnType("int");
@@ -143,13 +137,13 @@ namespace PixelHeartApi.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("UserGamelId");
+                    b.HasKey("UserGameId");
 
                     b.HasIndex("GameId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserGamel");
+                    b.ToTable("UserGames");
                 });
 
             modelBuilder.Entity("PixelHeartApi.Models.UserSkill", b =>
@@ -172,7 +166,7 @@ namespace PixelHeartApi.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserSkill");
+                    b.ToTable("UserSkills");
                 });
 
             modelBuilder.Entity("PixelHeartApi.Models.Match", b =>
@@ -198,10 +192,10 @@ namespace PixelHeartApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("PixelHeartApi.Models.UserGamel", b =>
+            modelBuilder.Entity("PixelHeartApi.Models.UserGame", b =>
                 {
                     b.HasOne("PixelHeartApi.Models.Game", "Game")
-                        .WithMany()
+                        .WithMany("UserGames")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -220,7 +214,7 @@ namespace PixelHeartApi.Migrations
             modelBuilder.Entity("PixelHeartApi.Models.UserSkill", b =>
                 {
                     b.HasOne("PixelHeartApi.Models.Skill", "Skill")
-                        .WithMany()
+                        .WithMany("UserSkills")
                         .HasForeignKey("SkillId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -234,6 +228,16 @@ namespace PixelHeartApi.Migrations
                     b.Navigation("Skill");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("PixelHeartApi.Models.Game", b =>
+                {
+                    b.Navigation("UserGames");
+                });
+
+            modelBuilder.Entity("PixelHeartApi.Models.Skill", b =>
+                {
+                    b.Navigation("UserSkills");
                 });
 
             modelBuilder.Entity("PixelHeartApi.Models.User", b =>

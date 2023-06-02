@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PixelHeartApi.Models
 {
-    public class UserGamel
+    public class UserGame
     {
         [Key]
-        public int UserGamelId { get; set; }
+        public int UserGameId { get; set; }
         [Required]
         public int UserId { get; set; }
         [ForeignKey("UserId")]

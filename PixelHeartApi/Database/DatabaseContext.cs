@@ -12,6 +12,8 @@ namespace PixelHeartApi.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<Game> Games { get; set; }
+        public DbSet<UserGame> UserGames { get; set; }
+        public DbSet<UserSkill> UserSkills { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

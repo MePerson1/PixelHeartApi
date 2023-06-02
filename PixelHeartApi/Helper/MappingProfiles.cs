@@ -9,6 +9,8 @@ namespace PixelHeartApi.Helper
         {
             CreateMap<User,UserDto>();
             CreateMap<UserDto,User>();
+            CreateMap<Game,GameDto>();
+            CreateMap<GameDto,Game>();
         }
     }
 }

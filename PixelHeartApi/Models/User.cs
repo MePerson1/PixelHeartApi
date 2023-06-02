@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PixelHeartApi.Models
 {
@@ -17,10 +18,10 @@ namespace PixelHeartApi.Models
 
         public string Backstory { get; set; } = string.Empty;
 
-        public string? VerificationToken { get; set; }
 
         public ICollection<UserSkill> UserSkills { get; set; }
-        public ICollection<UserGamel> UserGames { get; set; }
+
+        public ICollection<UserGame> UserGames { get; set; }
 
         public ICollection<Match> Matches { get; set; }
 
