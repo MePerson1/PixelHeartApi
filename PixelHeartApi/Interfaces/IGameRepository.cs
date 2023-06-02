@@ -9,5 +9,11 @@ namespace PixelHeartApi.Interfaces
         int Create(Game game);
         bool Update(int id, Game game);
         bool Delete(int id);
+
+        ICollection<Game> GetGameByUserId(int userId);
+        ICollection<Game> GetAllGames();
+        ICollection<User> GetUserByGameId(int userId);
+
+
     }
 }
