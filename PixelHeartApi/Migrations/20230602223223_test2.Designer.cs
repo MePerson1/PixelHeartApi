@@ -12,8 +12,8 @@ using PixelHeartApi.Data;
 namespace PixelHeartApi.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230602192903_test1")]
-    partial class test1
+    [Migration("20230602223223_test2")]
+    partial class test2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,6 +50,10 @@ namespace PixelHeartApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MatchId"));
 
+                    b.Property<string>("MessagesJson")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("SexId")
                         .HasColumnType("int");
 
@@ -77,10 +81,6 @@ namespace PixelHeartApi.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Level")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -153,6 +153,9 @@ namespace PixelHeartApi.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserSkillId"));
+
+                    b.Property<int>("Lvl")
+                        .HasColumnType("int");
 
                     b.Property<int>("SkillId")
                         .HasColumnType("int");

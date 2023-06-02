@@ -62,6 +62,11 @@ namespace PixelHeartApi.Repositories
             return true;
         }
 
+        public void SaveChanges()
+        {
+            context.SaveChanges();
+        }
+
 
     }
 }

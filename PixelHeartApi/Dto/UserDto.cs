@@ -9,6 +9,7 @@ namespace PixelHeartApi.Dto
         public string Password { get; set; }
         public int Age { get; set; }
 
+        //do wyjebania :D
         public string Backstory { get; set; } = string.Empty;
 
        

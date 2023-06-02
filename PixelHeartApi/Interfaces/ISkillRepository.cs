@@ -9,5 +9,10 @@ namespace PixelHeartApi.Interfaces
         int Create(Skill skill);
         bool Update(int id, Skill skill);
         bool Delete(int id);
+
+        ICollection<Skill> GetSkillByUserId(int userId);
+        ICollection<Skill> GetAllSkills();
+        ICollection<User> GetUserBySkillId(int userId);
+
     }
 }

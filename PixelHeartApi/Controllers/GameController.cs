@@ -37,12 +37,8 @@ namespace PixelHeartApi.Controllers
             return Ok(game);
         }
         [HttpPost]
-        public IActionResult CreateGame([FromQuery] int userId,[FromBody]GameDto gameCreate)
+        public IActionResult CreateGame([FromBody]GameDto gameCreate)
         {
-            if(_userRepository.GetById(userId) is null)
-            {
-                return BadRequest("Użytkownik o podanym id nie istnieje!");
-            }
             var game = _mapper.Map<Game>(gameCreate);
             
             var id = _gameRepository.Create(game);
@@ -67,6 +63,11 @@ namespace PixelHeartApi.Controllers
                 return NotFound();
             }
             return NoContent();
+        }
+        [HttpGet("user/{id:int}")]
+        public IActionResult GetGameByUserId(int userId)
+        {
+            return Ok();
         }
     }
 }

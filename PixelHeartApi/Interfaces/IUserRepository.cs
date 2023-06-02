@@ -10,6 +10,6 @@ namespace PixelHeartApi.Interfaces
         int Create(User user);
         bool Update(int id, User user);
         bool Delete(int id);
-        //dodac sprawdzenie czy user o danym emailu istnieje
+        void SaveChanges();
     }
 }

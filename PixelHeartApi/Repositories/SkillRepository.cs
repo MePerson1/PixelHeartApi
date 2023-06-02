@@ -33,9 +33,24 @@ namespace PixelHeartApi.Repositories
             return context.Skills.ToList();
         }
 
+        public ICollection<Skill> GetAllSkills()
+        {
+            throw new NotImplementedException();
+        }
+
         public Skill? GetById(int id)
         {
             return context.Skills.FirstOrDefault(skill => skill.Id == id);
+        }
+
+        public ICollection<Skill> GetSkillByUserId(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICollection<User> GetUserBySkillId(int userId)
+        {
+            throw new NotImplementedException();
         }
 
         public bool Update(int id, Skill skill)
@@ -46,7 +61,6 @@ namespace PixelHeartApi.Repositories
                 return false;
             }
             skillToUpadet.Name = skill.Name;
-            skillToUpadet.Level = skill.Level;
 
             context.SaveChanges();
 

@@ -5,7 +5,7 @@
 namespace PixelHeartApi.Migrations
 {
     /// <inheritdoc />
-    public partial class test1 : Migration
+    public partial class test2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -29,8 +29,7 @@ namespace PixelHeartApi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Level = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,6 +61,7 @@ namespace PixelHeartApi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     SexId = table.Column<int>(type: "int", nullable: false),
+                    MessagesJson = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -119,7 +119,8 @@ namespace PixelHeartApi.Migrations
                     UserSkillId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    SkillId = table.Column<int>(type: "int", nullable: false)
+                    SkillId = table.Column<int>(type: "int", nullable: false),
+                    Lvl = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

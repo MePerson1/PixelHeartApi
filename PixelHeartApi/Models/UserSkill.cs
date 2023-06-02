@@ -15,5 +15,8 @@ namespace PixelHeartApi.Models
         public int SkillId { get; set; }
         [ForeignKey("SkillId")]
         public Skill Skill { get; set; }
+
+        [Required]
+        public int Lvl { get; set; }
     }
 }

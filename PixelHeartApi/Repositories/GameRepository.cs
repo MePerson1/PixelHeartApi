@@ -34,9 +34,24 @@ namespace PixelHeartApi.Repositories
             return context.Games.ToList();
         }
 
+        public ICollection<Game> GetAllGames()
+        {
+            throw new NotImplementedException();
+        }
+
         public Game? GetById(int id)
         {
             return context.Games.FirstOrDefault(game => game.Id == id);
+        }
+
+        public ICollection<Game> GetGameByUserId(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICollection<User> GetUserByGameId(int userId)
+        {
+            throw new NotImplementedException();
         }
 
         public bool Update(int id, Game game)
