@@ -33,24 +33,16 @@ namespace PixelHeartApi.Repositories
             return context.Skills.ToList();
         }
 
-        public ICollection<Skill> GetAllSkills()
-        {
-            throw new NotImplementedException();
-        }
-
         public Skill? GetById(int id)
         {
             return context.Skills.FirstOrDefault(skill => skill.Id == id);
         }
 
-        public ICollection<Skill> GetSkillByUserId(int userId)
+        public IEnumerable<User> GetUserBySkillId(int skillId)
         {
-            throw new NotImplementedException();
-        }
-
-        public ICollection<User> GetUserBySkillId(int userId)
-        {
-            throw new NotImplementedException();
+            //IEnumerable<User> users = context.UserSkills.Where(e => e.SkillId == skillId).Include(p => p.User).ToList();
+            //return users.Select(p => p.User);
+            return null;
         }
 
         public bool Update(int id, Skill skill)

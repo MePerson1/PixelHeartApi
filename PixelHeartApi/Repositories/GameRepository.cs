@@ -1,4 +1,5 @@
-﻿using PixelHeartApi.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PixelHeartApi.Data;
 using PixelHeartApi.Interfaces;
 using PixelHeartApi.Models;
 
@@ -34,24 +35,15 @@ namespace PixelHeartApi.Repositories
             return context.Games.ToList();
         }
 
-        public ICollection<Game> GetAllGames()
-        {
-            throw new NotImplementedException();
-        }
-
         public Game? GetById(int id)
         {
             return context.Games.FirstOrDefault(game => game.Id == id);
         }
 
-        public ICollection<Game> GetGameByUserId(int userId)
+        public IEnumerable<User> GetUserByGameId(int gameId)
         {
-            throw new NotImplementedException();
-        }
-
-        public ICollection<User> GetUserByGameId(int userId)
-        {
-            throw new NotImplementedException();
+            var games = context.UserGames.Where(e => e.GameId == gameId).Include(p => p.User).ToList();
+            return games.Select(g => g.User);
         }
 
         public bool Update(int id, Game game)

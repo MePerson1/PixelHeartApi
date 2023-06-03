@@ -10,6 +10,12 @@ namespace PixelHeartApi.Interfaces
         int Create(User user);
         bool Update(int id, User user);
         bool Delete(int id);
+        IEnumerable<Game> GetGameByUserId(int userId);
+        IEnumerable<Skill> GetSkillByUserId(int userId);
+        bool DeleteUserGame(int userId,int gameId);
         void SaveChanges();
+
+        bool gameRelationExists(int userId,int gameId);
+        bool skillRelationExists(int userId, int skillId);
     }
 }

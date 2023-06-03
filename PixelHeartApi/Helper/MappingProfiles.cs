@@ -11,6 +11,8 @@ namespace PixelHeartApi.Helper
             CreateMap<UserDto,User>();
             CreateMap<Game,GameDto>();
             CreateMap<GameDto,Game>();
+            CreateMap<Skill,SkillDto>();
+            CreateMap<SkillDto,Skill>();
         }
     }
 }

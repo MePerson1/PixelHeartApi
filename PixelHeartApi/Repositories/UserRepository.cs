@@ -1,4 +1,5 @@
-﻿using PixelHeartApi.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PixelHeartApi.Data;
 using PixelHeartApi.Interfaces;
 using PixelHeartApi.Models;
 
@@ -62,11 +63,53 @@ namespace PixelHeartApi.Repositories
             return true;
         }
 
+        public IEnumerable<Game> GetGameByUserId(int userId)
+        {
+            var games = context.UserGames.Where(e => e.UserId == userId).Include(p => p.Game).ToList();
+            return games.Select(g => g.Game);
+        }
+
+        public bool DeleteUserGame(int userId, int gameId)
+        {
+            var userGame = context.UserGames.FirstOrDefault(ug => ug.UserId == userId && ug.GameId == gameId);
+            if (userGame == null)
+            {
+                return false;
+            }
+
+            context.UserGames.Remove(userGame);
+            context.SaveChanges();
+            return true;
+        }
+
         public void SaveChanges()
         {
             context.SaveChanges();
         }
 
+        public bool gameRelationExists(int userId, int gameId)
+        {
+            var userGame = context.UserGames.FirstOrDefault(ug => ug.UserId == userId && ug.GameId == gameId);
+            if (userGame == null)
+            {
+                return false;
+            }
+            return true;
+        }
+        public bool skillRelationExists(int userId, int skillId)
+        {
+            var userSkill = context.UserSkills.FirstOrDefault(ug => ug.UserId == userId && ug.SkillId == skillId);
+            if (userSkill == null)
+            {
+                return false;
+            }
+            return true;
+        }
 
+        public IEnumerable<Skill> GetSkillByUserId(int userId)
+        {
+            var games = context.UserSkills.Where(e => e.UserId == userId).ToList();
+            return games.Select(g => g.Skill);
+        }
     }
 }

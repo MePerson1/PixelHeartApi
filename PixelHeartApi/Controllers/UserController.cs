@@ -6,6 +6,7 @@ using PixelHeartApi.Dto;
 using PixelHeartApi.Interfaces;
 using PixelHeartApi.Models;
 using PixelHeartApi.Repositories;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -143,6 +144,10 @@ namespace PixelHeartApi.Controllers
             {
                 return NotFound();
             }
+            if (_userRepository.gameRelationExists(userId, gameId))
+            {
+                return BadRequest("Relacja juz istnieje!");
+            }
             if (user.UserGames == null)
             {
                 user.UserGames = new List<UserGame>();
@@ -151,10 +156,12 @@ namespace PixelHeartApi.Controllers
             {
                 game.UserGames = new List<UserGame>();
             }
+            
             var userGame = new UserGame { UserId=userId, GameId=gameId };
             user.UserGames.Add(userGame);
             game.UserGames.Add(userGame);
             _userRepository.SaveChanges();
+                        
             return Ok();
         }
         [HttpPost("{userId:int}/Skill/{skillId:int}")]
@@ -184,5 +191,44 @@ namespace PixelHeartApi.Controllers
             _userRepository.SaveChanges();
             return Ok();
         }
+        [HttpGet("{id:int}/skill")]
+        public IActionResult getUserSkill(int userId)
+        {
+            var user = _userRepository.GetById(userId);
+            if (user is null)
+            {
+                return NotFound(userId);
+            }
+
+            return Ok();
+        }
+        [HttpGet("{userId:int}/game")]
+        public IActionResult getUserGames(int userId)
+        {
+            var user = _userRepository.GetById(userId);
+            if(user is null)
+            {
+                return BadRequest("Nie ma takiego użytkownika!");
+            }
+            var games = _userRepository.GetGameByUserId(userId);
+
+            return Ok(games);
+        }
+        [HttpDelete("{userId:int}/game/{gameId:int}")]
+        public IActionResult deleteUserGame(int userId,int gameId)
+        {
+            if(_userRepository.GetById(userId) is null)
+            {
+                return BadRequest("Nie ma takiego usera!");
+            }
+            if (_gameRepository.GetById(gameId) is null)
+            {
+                return BadRequest("Nie ma takiej gry!");
+            }
+
+            _userRepository.DeleteUserGame(userId, gameId);
+            return Ok();
+        }
+        
     }
 }

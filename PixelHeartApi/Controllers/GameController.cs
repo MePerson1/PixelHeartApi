@@ -64,10 +64,17 @@ namespace PixelHeartApi.Controllers
             }
             return NoContent();
         }
-        [HttpGet("user/{id:int}")]
-        public IActionResult GetGameByUserId(int userId)
+        [HttpGet("{gameId:int}/user")]
+        public IActionResult GetUserByGameId(int gameId)
         {
-            return Ok();
+            if(_gameRepository.GetById(gameId) is null)
+            {
+                return BadRequest("Podana gra nie istnieje!");
+            }
+            var users = _gameRepository.GetUserByGameId(gameId);
+            var userDtos = _mapper.Map<IEnumerable<UserDto>>(users);
+            return Ok(userDtos);
         }
+        
     }
 }
