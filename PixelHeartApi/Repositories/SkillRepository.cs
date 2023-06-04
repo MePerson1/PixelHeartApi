@@ -1,4 +1,5 @@
-﻿using PixelHeartApi.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using PixelHeartApi.Data;
 using PixelHeartApi.Interfaces;
 using PixelHeartApi.Models;
 
@@ -40,9 +41,13 @@ namespace PixelHeartApi.Repositories
 
         public IEnumerable<User> GetUserBySkillId(int skillId)
         {
-            //IEnumerable<User> users = context.UserSkills.Where(e => e.SkillId == skillId).Include(p => p.User).ToList();
-            //return users.Select(p => p.User);
-            return null;
+            IEnumerable<User> users = context.UserSkills
+                .Where(e => e.SkillId == skillId)
+                .Include(e => e.User)
+                .Select(e => e.User)
+                .ToList();
+
+            return users;
         }
 
         public bool Update(int id, Skill skill)

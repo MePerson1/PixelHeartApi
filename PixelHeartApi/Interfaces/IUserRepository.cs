@@ -11,7 +11,7 @@ namespace PixelHeartApi.Interfaces
         bool Update(int id, User user);
         bool Delete(int id);
         IEnumerable<Game> GetGameByUserId(int userId);
-        IEnumerable<Skill> GetSkillByUserId(int userId);
+        public IEnumerable<Tuple<string, int>> GetSkillByUserId(int userId);
         bool DeleteUserGame(int userId,int gameId);
         void SaveChanges();
 

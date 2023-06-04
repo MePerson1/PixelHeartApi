@@ -47,7 +47,7 @@ namespace PixelHeartApi.Controllers
         [HttpGet("{id:int}/user")]
         public IActionResult GetUserBySkill(int id)
         {
-            if (_userRepository.GetById(id) is null)
+            if (_skillRepository.GetById(id) is null)
             {
                 return NotFound(id);
             }

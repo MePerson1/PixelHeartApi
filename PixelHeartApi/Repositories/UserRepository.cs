@@ -106,10 +106,14 @@ namespace PixelHeartApi.Repositories
             return true;
         }
 
-        public IEnumerable<Skill> GetSkillByUserId(int userId)
+        public IEnumerable<Tuple<string, int>> GetSkillByUserId(int userId)
         {
-            var games = context.UserSkills.Where(e => e.UserId == userId).ToList();
-            return games.Select(g => g.Skill);
+            var userSkills = context.UserSkills
+                .Where(e => e.UserId == userId)
+                .Include(e => e.Skill)
+                .ToList();
+
+            return userSkills.Select(e => new Tuple<string, int>(e.Skill.Name, e.Lvl));
         }
     }
 }

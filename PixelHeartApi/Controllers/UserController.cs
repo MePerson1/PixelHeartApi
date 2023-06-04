@@ -177,6 +177,10 @@ namespace PixelHeartApi.Controllers
             {
                 return NotFound();
             }
+            if (_userRepository.skillRelationExists(userId, skillId))
+            {
+                return BadRequest("Relacja juz istnieje!");
+            }
             if (user.UserSkills == null)
             {
                 user.UserSkills = new List<UserSkill>();
@@ -191,7 +195,7 @@ namespace PixelHeartApi.Controllers
             _userRepository.SaveChanges();
             return Ok();
         }
-        [HttpGet("{id:int}/skill")]
+        [HttpGet("{userId:int}/skill")]
         public IActionResult getUserSkill(int userId)
         {
             var user = _userRepository.GetById(userId);
@@ -199,8 +203,8 @@ namespace PixelHeartApi.Controllers
             {
                 return NotFound(userId);
             }
-
-            return Ok();
+            var skills = _userRepository.GetSkillByUserId(userId);
+            return Ok(skills);
         }
         [HttpGet("{userId:int}/game")]
         public IActionResult getUserGames(int userId)
