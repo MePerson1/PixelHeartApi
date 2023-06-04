@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PixelHeartApi.Models
 {
@@ -11,13 +12,18 @@ namespace PixelHeartApi.Models
         [Required]
         public string Email { get; set; }
         [Required]
-        public string Password { get; set; } //może to Hashcode powinen byc
+        public string Password { get; set; }
         [Required]
-        public string Backstory { get; set; }
-        [Required]
-        public int Level { get; set; }
+        public int Age { get; set; }
 
-        //Stats, favGames,
+        public string Backstory { get; set; } = string.Empty;
+
+
+        public ICollection<UserSkill> UserSkills { get; set; }
+
+        public ICollection<UserGame> UserGames { get; set; }
+
+        public ICollection<Match> Matches { get; set; }
 
     }
 }
