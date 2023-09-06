@@ -12,9 +12,9 @@ namespace PixelHeartApi.Models
         [ForeignKey("UserId")]
         public User User { get; set; }
         [Required]
-        public int SexId { get; set; }
-        [ForeignKey("SexId")]
-        public User Sex { get; set; }
+        public int LoveId { get; set; }
+        [ForeignKey("LoveId")]
+        public User Love { get; set; }
 
         public bool IsInterested { get; set; }
         public bool AreMatched { get; set; } = false;

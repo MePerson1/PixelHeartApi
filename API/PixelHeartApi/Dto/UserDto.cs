@@ -11,7 +11,6 @@ namespace PixelHeartApi.Dto
         public int Age { get; set; }
 
         public string Photo { get; set; } = string.Empty;
-        //do wyjebania :D
         public string Backstory { get; set; } = string.Empty;
 
        

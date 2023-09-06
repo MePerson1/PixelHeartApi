@@ -17,8 +17,8 @@ namespace PixelHeartApi.Repositories
 
         public bool areMatched(int id_1, int id_2)
         {
-            var match1 = context.Matches.FirstOrDefault(m => m.UserId == id_1 && m.SexId == id_2 && m.IsInterested);
-            var match2 = context.Matches.FirstOrDefault(m => m.UserId == id_2 && m.SexId == id_1 && m.IsInterested);
+            var match1 = context.Matches.FirstOrDefault(m => m.UserId == id_1 && m.LoveId == id_2 && m.IsInterested);
+            var match2 = context.Matches.FirstOrDefault(m => m.UserId == id_2 && m.LoveId == id_1 && m.IsInterested);
 
             bool isMatched = match1 != null && match2 != null;
 
@@ -28,13 +28,13 @@ namespace PixelHeartApi.Repositories
         //w sumie nie uzywam
         public int createMatch(int id_1, int id_2,bool interested)
         {
-            var match = context.Matches.FirstOrDefault(e => e.UserId == id_1 && e.SexId == id_2);
+            var match = context.Matches.FirstOrDefault(e => e.UserId == id_1 && e.LoveId == id_2);
             if(match is null)
             {
                 Match newMatch = new Match
                 {
                     UserId = id_1,
-                    SexId = id_2,
+                    LoveId = id_2,
                     IsInterested = interested
                 };
 
@@ -49,8 +49,8 @@ namespace PixelHeartApi.Repositories
 
         public bool deleteMatch(int id_1, int id_2)
         {
-            var match1 = context.Matches.FirstOrDefault(e => e.UserId == id_1 && e.SexId == id_2);
-            var match2 = context.Matches.FirstOrDefault(e => e.UserId == id_2 && e.SexId == id_1);
+            var match1 = context.Matches.FirstOrDefault(e => e.UserId == id_1 && e.LoveId == id_2);
+            var match2 = context.Matches.FirstOrDefault(e => e.UserId == id_2 && e.LoveId == id_1);
             if (match1 is null)
             {
                 return false;
@@ -79,7 +79,7 @@ namespace PixelHeartApi.Repositories
 
         public Match getMatch(int id_1, int id_2)
         {
-            var match1 = context.Matches.FirstOrDefault(m => m.UserId == id_1 && m.SexId == id_2 && m.IsInterested);
+            var match1 = context.Matches.FirstOrDefault(m => m.UserId == id_1 && m.LoveId == id_2 && m.IsInterested);
             return match1;
         }
 
@@ -89,8 +89,8 @@ namespace PixelHeartApi.Repositories
             {
                 return false;
             }
-            var match1 = context.Matches.FirstOrDefault(m => m.UserId == id_1 && m.SexId == id_2 && m.IsInterested);
-            var match2 = context.Matches.FirstOrDefault(m => m.UserId == id_2 && m.SexId == id_1 && m.IsInterested);
+            var match1 = context.Matches.FirstOrDefault(m => m.UserId == id_1 && m.LoveId == id_2 && m.IsInterested);
+            var match2 = context.Matches.FirstOrDefault(m => m.UserId == id_2 && m.LoveId == id_1 && m.IsInterested);
 
             if (match1 != null && match2 != null)
             {
@@ -104,14 +104,14 @@ namespace PixelHeartApi.Repositories
         }
         public bool isMatchExists(int id_1, int id_2)
         {
-            var match = context.Matches.FirstOrDefault(e => e.UserId == id_1 && e.SexId == id_2);
+            var match = context.Matches.FirstOrDefault(e => e.UserId == id_1 && e.LoveId == id_2);
             if(match is null)
                 return false;
             return true;
         }
         public bool isMatchedExists(int id_1, int id_2)
         {
-            var match = context.Matches.FirstOrDefault(e => e.UserId == id_1 && e.SexId == id_2 && e.AreMatched==true);
+            var match = context.Matches.FirstOrDefault(e => e.UserId == id_1 && e.LoveId == id_2 && e.AreMatched==true);
             if (match is null)
                 return false;
             return true;
@@ -119,8 +119,8 @@ namespace PixelHeartApi.Repositories
 
         public bool updateMassage(int id_1, int id_2, string message)
         {
-            var match1 = context.Matches.FirstOrDefault(m => m.UserId == id_1 && m.SexId == id_2);
-            var match2 = context.Matches.FirstOrDefault(m => m.UserId == id_2 && m.SexId == id_1);
+            var match1 = context.Matches.FirstOrDefault(m => m.UserId == id_1 && m.LoveId == id_2);
+            var match2 = context.Matches.FirstOrDefault(m => m.UserId == id_2 && m.LoveId == id_1);
             if(match1 is null)
                 return false;
             if(match2 is null) return false;
@@ -132,7 +132,7 @@ namespace PixelHeartApi.Repositories
 
         public string getMessage(int id_1, int id_2)
         {
-            var match = context.Matches.FirstOrDefault(m => m.UserId == id_1 && m.SexId == id_2);
+            var match = context.Matches.FirstOrDefault(m => m.UserId == id_1 && m.LoveId == id_2);
             if (match is null)
                 return "Bląd";
             return match.MessagesJson;
