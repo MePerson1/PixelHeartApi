@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using PixelHeartApi.Dto;
@@ -30,7 +29,7 @@ namespace PixelHeartApi.Controllers
         public IActionResult Register(UserDto user)
         {
             var newUser = _mapper.Map<User>(user);
-            if(_userRepository.GetByEmail(newUser.Email) != null) 
+            if (_userRepository.GetByEmail(newUser.Email) != null)
             {
                 return BadRequest("Uzytkownik o tak emailu juz istnieje!");
             }
@@ -48,7 +47,7 @@ namespace PixelHeartApi.Controllers
             {
                 return BadRequest("Uzytkownik o tak emailu nie istnieje!");
             }
-            if(checkUser.Password != user.Password)
+            if (checkUser.Password != user.Password)
             {
                 return BadRequest("Podano bledne hasło!");
             }

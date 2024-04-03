@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using PixelHeartApi.Dto;
 using PixelHeartApi.Interfaces;
 using PixelHeartApi.Models;
-using PixelHeartApi.Repositories;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -263,7 +261,7 @@ namespace PixelHeartApi.Controllers
             {
                 user2.Matches = new List<Match>();
             }
-            var match = new Match { UserId = userId, SexId = sexId, IsInterested = interested };
+            var match = new Match { UserId = userId, LoveId = sexId, IsInterested = interested };
             user.Matches.Add(match);
             user2.Matches.Add(match);
             _userRepository.SaveChanges();
@@ -334,7 +332,8 @@ namespace PixelHeartApi.Controllers
             return Ok();
         }
         [HttpDelete("{userId:int}/matched/{sexId:int}")]
-        public IActionResult deleteMatch(int userId,int sexId) {
+        public IActionResult deleteMatch(int userId, int sexId)
+        {
             var user1 = _userRepository.GetById(userId);
             if (user1 is null)
             {
@@ -345,7 +344,7 @@ namespace PixelHeartApi.Controllers
             {
                 return NotFound();
             }
-            if(_matchRepository.deleteMatch(userId, sexId))
+            if (_matchRepository.deleteMatch(userId, sexId))
             {
                 return Ok("Relacja usunieta");
             }
@@ -355,7 +354,7 @@ namespace PixelHeartApi.Controllers
         public IActionResult getSex(int userId)
         {
             var allUsers = _userRepository.GetAll();
-            if(_userRepository.GetById(userId) is null)
+            if (_userRepository.GetById(userId) is null)
             {
                 return NotFound();
             }
@@ -373,7 +372,7 @@ namespace PixelHeartApi.Controllers
                 {
                     count++;
                     randomUser = filteredUsers[random.Next(filteredUsers.Count)];
-                    if(_matchRepository.isMatchedExists(userId, randomUser.Id))
+                    if (_matchRepository.isMatchedExists(userId, randomUser.Id))
                     {
                         if (count == 100)
                         {
@@ -409,7 +408,7 @@ namespace PixelHeartApi.Controllers
             return Ok("Wyslane!");
         }
         [HttpGet("{id_1:int}/mmessage/{id_2:int}")]
-        public IActionResult getMessage(int id_1,int id_2)
+        public IActionResult getMessage(int id_1, int id_2)
         {
             if (_userRepository.GetById(id_1) is null)
             {
@@ -419,7 +418,7 @@ namespace PixelHeartApi.Controllers
             {
                 return NotFound("User nie istnieje!");
             }
-            var message = _matchRepository.getMessage(id_1, id_2); 
+            var message = _matchRepository.getMessage(id_1, id_2);
             return Ok(message);
         }
     }

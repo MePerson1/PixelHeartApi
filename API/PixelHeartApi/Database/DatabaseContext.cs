@@ -1,8 +1,5 @@
-﻿using PixelHeartApi.Models;
-using Microsoft.AspNetCore.Mvc.ViewEngines;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PixelHeartApi.Models;
-using System.Collections.Generic;
 
 namespace PixelHeartApi.Data
 {
@@ -24,12 +21,12 @@ namespace PixelHeartApi.Data
             .HasForeignKey(p => p.UserId)
             .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Match>()
-                        .HasOne(p => p.Sex)
+                        .HasOne(p => p.Love)
                         .WithMany()
-                        .HasForeignKey(p => p.SexId)
+                        .HasForeignKey(p => p.LoveId)
                         .OnDelete(DeleteBehavior.Restrict);
         }
 
-        
+
     }
 }
