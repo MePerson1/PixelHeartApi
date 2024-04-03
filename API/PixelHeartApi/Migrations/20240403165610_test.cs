@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace PixelHeartApi.Migrations
 {
     /// <inheritdoc />
-    public partial class test2 : Migration
+    public partial class test : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,9 +15,9 @@ namespace PixelHeartApi.Migrations
                 name: "Games",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,9 +28,9 @@ namespace PixelHeartApi.Migrations
                 name: "Skills",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -40,13 +41,14 @@ namespace PixelHeartApi.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    Backstory = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    Age = table.Column<int>(type: "integer", nullable: false),
+                    Backstory = table.Column<string>(type: "text", nullable: false),
+                    Photo = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,33 +56,35 @@ namespace PixelHeartApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Match",
+                name: "Matches",
                 columns: table => new
                 {
-                    MatchId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    SexId = table.Column<int>(type: "int", nullable: false),
-                    MessagesJson = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UserId1 = table.Column<int>(type: "int", nullable: true)
+                    MatchId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    LoveId = table.Column<int>(type: "integer", nullable: false),
+                    IsInterested = table.Column<bool>(type: "boolean", nullable: false),
+                    AreMatched = table.Column<bool>(type: "boolean", nullable: false),
+                    MessagesJson = table.Column<string>(type: "text", nullable: false),
+                    UserId1 = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Match", x => x.MatchId);
+                    table.PrimaryKey("PK_Matches", x => x.MatchId);
                     table.ForeignKey(
-                        name: "FK_Match_Users_SexId",
-                        column: x => x.SexId,
+                        name: "FK_Matches_Users_LoveId",
+                        column: x => x.LoveId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Match_Users_UserId",
+                        name: "FK_Matches_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Match_Users_UserId1",
+                        name: "FK_Matches_Users_UserId1",
                         column: x => x.UserId1,
                         principalTable: "Users",
                         principalColumn: "Id");
@@ -90,10 +94,10 @@ namespace PixelHeartApi.Migrations
                 name: "UserGames",
                 columns: table => new
                 {
-                    UserGameId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    GameId = table.Column<int>(type: "int", nullable: false)
+                    UserGameId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    GameId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,11 +120,11 @@ namespace PixelHeartApi.Migrations
                 name: "UserSkills",
                 columns: table => new
                 {
-                    UserSkillId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    SkillId = table.Column<int>(type: "int", nullable: false),
-                    Lvl = table.Column<int>(type: "int", nullable: false)
+                    UserSkillId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    SkillId = table.Column<int>(type: "integer", nullable: false),
+                    Lvl = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -140,18 +144,18 @@ namespace PixelHeartApi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Match_SexId",
-                table: "Match",
-                column: "SexId");
+                name: "IX_Matches_LoveId",
+                table: "Matches",
+                column: "LoveId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Match_UserId",
-                table: "Match",
+                name: "IX_Matches_UserId",
+                table: "Matches",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Match_UserId1",
-                table: "Match",
+                name: "IX_Matches_UserId1",
+                table: "Matches",
                 column: "UserId1");
 
             migrationBuilder.CreateIndex(
@@ -179,7 +183,7 @@ namespace PixelHeartApi.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Match");
+                name: "Matches");
 
             migrationBuilder.DropTable(
                 name: "UserGames");
