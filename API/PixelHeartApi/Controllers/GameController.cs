@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PixelHeartApi.Dto;
 using PixelHeartApi.Interfaces;
 using PixelHeartApi.Models;
-using PixelHeartApi.Dto;
 
 namespace PixelHeartApi.Controllers
 {
@@ -21,16 +20,15 @@ namespace PixelHeartApi.Controllers
             _userRepository = userRepository;
         }
         [HttpGet]
-        public IActionResult GetAllGames()
+        public async Task<IActionResult> GetAllGames()
         {
-            var games = _gameRepository.GetAll();
-            var gamesDto = _mapper.Map<IEnumerable<GameDto>>(games);
-            return Ok(gamesDto);
+            var games = await _gameRepository.GetAll();
+            return Ok(_mapper.Map<IEnumerable<GameDto>>(games));
         }
         [HttpGet("{id:int}")]
-        public IActionResult GetGamesById(int id)
+        public async Task<IActionResult> GetGamesById(int id)
         {
-            var game = _gameRepository.GetById(id);
+            var game = await _gameRepository.GetById(id);
             if (game is null)
             {
                 return NotFound();
@@ -38,44 +36,46 @@ namespace PixelHeartApi.Controllers
             return Ok(game);
         }
         [HttpPost]
-        public IActionResult CreateGame([FromBody]GameDto gameCreate)
+        public async Task<IActionResult> CreateGame([FromBody] GameDto gameCreate)
         {
             var game = _mapper.Map<Game>(gameCreate);
-            
-            var id = _gameRepository.Create(game);
+
+            var id = await _gameRepository.Create(game);
+
+            //???
             return Created("/api/game/{id}", game);
         }
         [HttpPut("{id:int}")]
-        public IActionResult UpdateGame([FromRoute] int id, [FromBody] Game game)
+        public async Task<IActionResult> UpdateGame([FromRoute] int id, [FromBody] GameDto game)
         {
-            var isSuccess = _gameRepository.Update(id, game);
+            var updatedGame = _mapper.Map<Game>(game);
+            var isSuccess = await _gameRepository.Update(id, updatedGame);
             if (!isSuccess)
             {
                 return NotFound();
             }
-            return NoContent();
+            return Ok("Game successfully updated!");
         }
         [HttpDelete("{id:int}")]
-        public IActionResult DeleteGame(int id)
+        public async Task<IActionResult> DeleteGame(int id)
         {
-            var isSuccess = _gameRepository.Delete(id);
+            var isSuccess = await _gameRepository.Delete(id);
             if (!isSuccess)
             {
                 return NotFound();
             }
-            return NoContent();
+            return Ok("Game successfully deleted!");
         }
         [HttpGet("{gameId:int}/user")]
-        public IActionResult GetUserByGameId(int gameId)
+        public async Task<IActionResult> GetUserByGameId(int gameId)
         {
-            if(_gameRepository.GetById(gameId) is null)
+            if (await _gameRepository.GetById(gameId) is null)
             {
                 return BadRequest("Podana gra nie istnieje!");
             }
-            var users = _gameRepository.GetUserByGameId(gameId);
-            var userDtos = _mapper.Map<IEnumerable<UserDto>>(users);
-            return Ok(userDtos);
+            var users = await _gameRepository.GetUserByGameId(gameId);
+            return Ok(_mapper.Map<IEnumerable<UserDto>>(users));
         }
-        
+
     }
 }

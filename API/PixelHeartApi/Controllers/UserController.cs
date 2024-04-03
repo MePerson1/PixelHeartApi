@@ -132,15 +132,16 @@ namespace PixelHeartApi.Controllers
 
         }
 
+        //to modify for user
         [HttpPost("{userId:int}/Game/{gameId:int}")]
-        public IActionResult addGame(int userId, int gameId)
+        public async Task<IActionResult> addGame(int userId, int gameId)
         {
             var user = _userRepository.GetById(userId);
             if (user is null)
             {
                 return NotFound();
             }
-            var game = _gameRepository.GetById(gameId);
+            var game = await _gameRepository.GetById(gameId);
             if (game is null)
             {
                 return NotFound();

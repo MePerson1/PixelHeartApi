@@ -7,57 +7,62 @@ namespace PixelHeartApi.Repositories
 {
     public class GameRepository : IGameRepository
     {
-        private DatabaseContext context;
+        private DatabaseContext _context;
         public GameRepository(DatabaseContext context)
         {
-            this.context = context;
+            this._context = context;
         }
-        public int Create(Game game)
+        public async Task<int> Create(Game game)
         {
 
-            context.Games.Add(game);
-            context.SaveChanges();
+            await _context.Games.AddAsync(game);
+            await SaveChanges();
             return game.Id;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
-            var gameToDelete = context.Games.Find(id);
+            var gameToDelete = _context.Games.Find(id);
             if (gameToDelete is null)
             { return false; }
-            context.Games.Remove(gameToDelete);
-            context.SaveChanges();
+            _context.Games.Remove(gameToDelete);
+            await SaveChanges();
             return true;
         }
 
-        public IEnumerable<Game> GetAll()
+        public async Task<IEnumerable<Game>> GetAll()
         {
-            return context.Games.ToList();
+            return await _context.Games.ToListAsync();
         }
 
-        public Game? GetById(int id)
+        public async Task<Game?> GetById(int id)
         {
-            return context.Games.FirstOrDefault(game => game.Id == id);
+            return await _context.Games.FirstOrDefaultAsync(game => game.Id == id);
         }
 
-        public IEnumerable<User> GetUserByGameId(int gameId)
+        public async Task<IEnumerable<User>> GetUserByGameId(int gameId)
         {
-            var games = context.UserGames.Where(e => e.GameId == gameId).Include(p => p.User).ToList();
+            var games = await _context.UserGames.Where(e => e.GameId == gameId).Include(p => p.User).ToListAsync();
             return games.Select(g => g.User);
         }
 
-        public bool Update(int id, Game game)
+        public async Task<bool> Update(int id, Game game)
         {
-            var gameToUpadet = context.Games.Find(id);
+            var gameToUpadet = await _context.Games.FindAsync(id);
             if (gameToUpadet is null)
             {
                 return false;
             }
             gameToUpadet.Name = game.Name;
 
-            context.SaveChanges();
+            await SaveChanges();
 
             return true;
+        }
+
+        public async Task SaveChanges()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }
